@@ -36,12 +36,13 @@
                     </li>
                 </ul>
             </nav>
-             
+
             <section class="blocks" id="education">
                 <h2 id="education2">Education</h2>
                 <div class="block-item">
                     <h3>MCA</h3>
-                    <p>Miet | 2025</p>
+                    <p>Miet</p>
+                    <p>2025</p>
                 </div>
                 <div class="block-item">
                     <h3>B.Sc</h3>
@@ -56,7 +57,7 @@
             </section>
             <section class="blocks" id="projects">
                 <h2>Projects</h2>
-                <div>
+                <div class="block-item">
                     <h3>ONLINE PORTFOLIO</h3>
                     <p>JavaScript, CSS, HTML</p>
                     <p>
@@ -64,7 +65,7 @@
                         and Admin Login Section using JavaScript
                     </p>
                 </div>
-                <div>
+                <div class="block-item">
                     <h3>User Dirctory Using React</h3>
                     <p>React, JavaScript</p>
                     <p>
@@ -74,7 +75,7 @@
             </section>
             <section class="blocks" id="">
                 <h2>Hobbies</h2>
-                <div>
+                <div class="block-item">
                     <h3>Playing Chess</h3>
                     <p>
                         Strategic Thinker – I enjoy playing Chess as it hones my
@@ -83,7 +84,7 @@
                         to writing clean code.
                     </p>
                 </div>
-                <div>
+                <div class="block-item">
                     <h3>Playing Bedminton</h3>
                     <p>
                         Agility & Focus – Playing Badminton helps me maintain
@@ -92,34 +93,57 @@
                     </p>
                 </div>
             </section>
+
+            <!-- CONTACT ME SECTION -->
             <section class="blocks" id="contact-me">
                 <h2>Contact Me</h2>
-                <form id="contact-form">
-                    <div>
+                <form
+                    action="https://formspree.io/f/xwvrogrg"
+                    method="POST"
+                    id="contact-form"
+                >
+                    <div class="form-group">
                         <label>Name</label>
-                        <input type="text" id="name" placeholder="Enter name" />
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter name"
+                            required
+                        />
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label>Email</label>
                         <input
-                            type="text"
+                            type="email"
+                            name="_replyto"
                             id="email"
                             placeholder="Enter email"
+                            required
                         />
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label>Message</label>
-                        <input
-                            type="text"
+                        <textarea
+                            name="message"
                             id="message"
                             placeholder="Enter message"
-                        />
+                            required
+                        ></textarea>
                     </div>
-                    <div>
-                        <button type="submit">Send</button>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            name="_gotcha"
+                            style="display: none"
+                        />
+                        <!-- <button type="submit">Send</button> -->
+                        <button id="my-form-button">Submit</button>
+                        <p id="my-form-status"></p>
                     </div>
                 </form>
             </section>
+
+            <!-- Admin Login Section -->
             <section class="blocks" id="admin-login">
                 <h2>Admin Login</h2>
                 <form id="admin-form">
