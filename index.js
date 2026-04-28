@@ -1,111 +1,111 @@
-let ctrlOfAdminLogin = document.getElementById("admin-login");
-console.log(ctrlOfAdminLogin);
-function showAdminLogin() {
-    ctrlOfAdminLogin.style.display = "block";
-}
+ 
+const themeToggle = document.getElementById("theme-toggle");
+const contactForm = document.getElementById("contact-form");
+const adminForm = document.getElementById("admin-form");
+const adminSection = document.getElementById("admin-login");
+const userResponsesSection = document.getElementById("user-responses");
+const messagesList = document.getElementById("messages-list");
+const emailError = document.getElementById("email-error");
 
-//admin login section
-let controlOfAdminForm = document.getElementById("admin-form");
-let controlOfUserResponses = document.getElementById("user-responses");
-controlOfAdminForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    let storedUsername = "vijay";
-    let storedPassword = "1234";
+ 
+const currentTheme = localStorage.getItem("theme") || "light";
+document.documentElement.setAttribute("data-theme", currentTheme);
 
-    let username = document.getElementById("usrname").value;
-    let password = document.getElementById("pswd").value;
+themeToggle.addEventListener("click", () => {
+    let theme = document.documentElement.getAttribute("data-theme");
+    let newTheme = theme === "dark" ? "light" : "dark";
 
-    if (password == storedPassword && username == storedUsername) {
-        alert("Acess granted");
-        ctrlOfAdminLogin.style.display = "none";
-        controlOfUserResponses.style.display = "block";
-        showUserResponses(); //calling of function
-    } else {
-        alert("Acess denied!");
-    }
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    updateButtonText(newTheme);
 });
 
-//contact me section
+function updateButtonText(theme) {
+    themeToggle.textContent =
+        theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+}
 
-let controlOfContactForm = document.getElementById("contact-form");
-controlOfContactForm.addEventListener("submit", (e) => {
+updateButtonText(currentTheme);
+
+contactForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let message = document.getElementById("message").value;
-    let date = new Date().toLocaleString();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-    let response = {
-        name,
-        email,
-        message,
-        date,
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+        emailError.textContent = "❌ Please enter a valid email address.";
+        return;
+    } else {
+        emailError.textContent = "";
+    }
+
+    const newResponse = {
+        name: name,
+        email: email,
+        message: message,
+        date: new Date().toLocaleString(),
     };
 
     let dummyDB = JSON.parse(localStorage.getItem("tempDB")) || [];
-    dummyDB.push(response);
-
+    dummyDB.push(newResponse);
     localStorage.setItem("tempDB", JSON.stringify(dummyDB));
-    alert("Your response is submitted.");
+
+    alert("Success! Your message has been saved.");
+    contactForm.reset();
+});
+function showAdminLogin() {
+    if (adminSection.style.display === "block") {
+        adminSection.style.display = "none";
+    } else {
+        adminSection.style.display = "block";
+        adminSection.scrollIntoView({ behavior: "smooth" });
+    }
+}
+
+adminForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const user = document.getElementById("usrname").value;
+    const pass = document.getElementById("pswd").value;
+
+    if (user === "vijay" && pass === "1234") {
+        alert("Access Granted!");
+        adminSection.style.display = "none";
+        userResponsesSection.style.display = "block";
+        renderResponses();
+    } else {
+        alert("Invalid Username or Password!");
+    }
 });
 
-function showUserResponses() {
-    let controlOfUserResponses = document.getElementById("user-responses");
+function renderResponses() {
+    messagesList.innerHTML = ""; 
     let dummyDB = JSON.parse(localStorage.getItem("tempDB")) || [];
-    // dummyDB.push(response);
-    console.log("All data:", dummyDB);
 
-    dummyDB.forEach((responses) => {
-        let newDiv = document.createElement("div");
-        newDiv.innerHTML = `
-    <p>Name : ${responses.name}</p>
-    <p>Email :${responses.email}</p>
-    <p>Message: ${responses.message}</p>
-    <p>Date: ${responses.date}</p>
-    <hr>`;
+    if (dummyDB.length === 0) {
+        messagesList.innerHTML = "<p>No messages found.</p>";
+        return;
+    }
 
-        controlOfUserResponses.append(newDiv);
+    dummyDB.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "block-item";  
+        card.style.marginTop = "10px";
+        card.innerHTML = `
+            <p><strong>Date:</strong> ${item.date}</p>
+            <p><strong>Name:</strong> ${item.name}</p>
+            <p><strong>Email:</strong> ${item.email}</p>
+            <p><strong>Message:</strong> ${item.message}</p>
+        `;
+        messagesList.appendChild(card);
     });
 }
 
-var form = document.getElementById("contact-me");
-
-async function handleSubmit(event) {
-    event.preventDefault();
-    var status = document.getElementById("my-form-status");
-    var data = new FormData(event.target);
-
-    fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            Accept: "application/json",
-        },
-    })
-        .then((response) => {
-            if (response.ok) {
-                status.innerHTML =
-                    "Thanks! Your message has been sent successfully.";
-                status.style.color = "green";
-                form.reset(); //form clearing
-                response.json().then((data) => {
-                    if (Object.hasOwn(data, "errors")) {
-                        status.innerHTML = data["errors"]
-                            .map((error) => error["message"])
-                            .join(", ");
-                    } else {
-                        status.innerHTML =
-                            "Oops! There was a problem submitting your form";
-                    }
-                });
-            }
-        })
-        .catch((error) => {
-            status.innerHTML =
-                "Oops! There was a problem connecting to the server";
-            status.style.color = "red";
-        });
-}
-
-form.addEventListener("submit", handleSubmit);
+document.getElementById("logout-btn").addEventListener("click", () => {
+    userResponsesSection.style.display = "none";
+    adminForm.reset();
+    alert("Logged out successfully.");
+});

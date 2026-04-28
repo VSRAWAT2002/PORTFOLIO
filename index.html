@@ -1,42 +1,40 @@
-<!doctype html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-
         <link rel="stylesheet" href="stylesheet.css" />
     </head>
     <body>
-        <header>
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+                <li>
+                    <a href="#education">Education</a>
+                </li>
+                <li>
+                    <a href="#projects">Projects</a>
+                </li>
+                <li>
+                    <a href="#hobbies">Hobbies</a>
+                </li>
+                <li>
+                    <a href="#contact-me">Contact Me</a>
+                </li>
+                <li>
+                    <a href="#admin-login" onclick="showAdminLogin()"
+                        >Admin Login</a
+                    >
+                </li>
+            </ul>
+            <button id="theme-toggle">Toggle Mode</button>
+        </nav>
+        <header id="home">
             <h2>
                 <i>VIJAY SINGH</i>
             </h2>
-            <p>Software Developer, Java Developer Trainee</p>
+            <p>Web Developer, Java Backend Trainee</p>
         </header>
         <main>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="#education">Education</a>
-                    </li>
-                    <li>
-                        <a href="#project">Projects</a>
-                    </li>
-                    <li>
-                        <a href="#hobbies">Hobbies</a>
-                    </li>
-                    <li>
-                        <a href="#contact-me">Contact Me</a>
-                    </li>
-                    <li>
-                        <a href="#admin-login" onclick="showAdminLogin()"
-                            >Admin Login</a
-                        >
-                    </li>
-                </ul>
-            </nav>
-
             <section class="blocks" id="education">
                 <h2 id="education2">Education</h2>
                 <div class="block-item">
@@ -55,6 +53,7 @@
                     <p>2018</p>
                 </div>
             </section>
+
             <section class="blocks" id="projects">
                 <h2>Projects</h2>
                 <div class="block-item">
@@ -73,7 +72,8 @@
                     </p>
                 </div>
             </section>
-            <section class="blocks" id="">
+
+            <section class="blocks" id="hobbies">
                 <h2>Hobbies</h2>
                 <div class="block-item">
                     <h3>Playing Chess</h3>
@@ -94,16 +94,11 @@
                 </div>
             </section>
 
-            <!-- CONTACT ME SECTION -->
             <section class="blocks" id="contact-me">
                 <h2>Contact Me</h2>
-                <form
-                    action="https://formspree.io/f/xwvrogrg"
-                    method="POST"
-                    id="contact-form"
-                >
+                <form id="contact-form">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label for="name">Name</label>
                         <input
                             type="text"
                             id="name"
@@ -111,69 +106,76 @@
                             required
                         />
                     </div>
+
                     <div class="form-group">
-                        <label>Email</label>
+                        <label for="email">Email</label>
                         <input
-                            type="email"
-                            name="_replyto"
+                            type="text"
                             id="email"
                             placeholder="Enter email"
                             required
                         />
+                        <span id="email-error" style="color: red"></span>
                     </div>
+
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea
-                            name="message"
-                            id="message"
-                            placeholder="Enter message"
-                            required
-                        ></textarea>
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Message"></textarea>
                     </div>
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="_gotcha"
-                            style="display: none"
-                        />
-                        <!-- <button type="submit">Send</button> -->
-                        <button id="my-form-button">Submit</button>
-                        <p id="my-form-status"></p>
-                    </div>
+
+                    <button type="submit">Send Message</button>
                 </form>
             </section>
-
-            <!-- Admin Login Section -->
             <section class="blocks" id="admin-login">
-                <h2>Admin Login</h2>
-                <form id="admin-form">
-                    <div>
-                        <label>Username</label>
-                        <input
-                            type="text"
-                            id="usrname"
-                            placeholder="Enter Username"
-                        />
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            id="pswd"
-                            placeholder="Enter Password"
-                        />
-                    </div>
-                    <div>
-                        <input type="submit" />
-                    </div>
-                </form>
+                <div id="login-container">
+                    <h2>Admin Login</h2>
+                    <form id="admin-form">
+                        <div>
+                            <label>Username</label>
+                            <input
+                                type="text"
+                                id="usrname"
+                                placeholder="Enter Username"
+                            />
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                id="pswd"
+                                placeholder="Enter Password"
+                            />
+                        </div>
+                        <div>
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
             </section>
             <section class="blocks" id="user-responses">
                 <div id="user-messages">
                     <h2>User Responses</h2>
+                    <div id="messages-list"></div>
+                    <button id="logout-btn">Logout</button>
                 </div>
             </section>
-            <!--             <script src="jscript.js"></script> -->
+            <script src="index.js"></script>
         </main>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2026 Vijay Singh. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a
+                        href="https://www.linkedin.com/in/vijaysinghalien/"
+                        target="_blank"
+                        >LinkedIn</a
+                    >
+                    <a href="https://github.com/VSRAWAT2002" target="_blank"
+                        >GitHub</a
+                    >
+                    <a href="mailto:vijaysingh.rawat2002@gmail.com">Email Me</a>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
